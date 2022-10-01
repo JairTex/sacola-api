@@ -1,4 +1,9 @@
 package com.teste.sacola.Repository;
 
-public interface SacolaRepository {
+import com.teste.sacola.model.Sacola;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface SacolaRepository extends JpaRepository<Sacola, Long> {
 }

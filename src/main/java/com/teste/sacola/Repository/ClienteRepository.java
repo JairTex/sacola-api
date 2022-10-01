@@ -1,4 +1,9 @@
 package com.teste.sacola.Repository;
 
-public interface ClienteRepository {
+import com.teste.sacola.model.Cliente;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 }
