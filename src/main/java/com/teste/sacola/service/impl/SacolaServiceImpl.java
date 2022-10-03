@@ -10,8 +10,10 @@ import com.teste.sacola.model.Sacola;
 import com.teste.sacola.resource.dto.ItemDto;
 import com.teste.sacola.service.SacolaService;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -53,10 +55,34 @@ public class SacolaServiceImpl implements SacolaService {
                         " Tente esvaziar a sacola para adicionar este item.");
             }
         }
+/*
+        Double totalDosItensDaSacola = 0.;
 
+        List<Item> itensSacola= sacola.getItens();
+        for(Item item : itensSacola){
+            Double totalDosItens = item.getQuantidade() * item.getProduto().getValorUnitario();
+            totalDosItensDaSacola += totalDosItens;
+        }
+        sacola.setValorTotal(totalDosItensDaSacola);
         sacolaRepository.save(sacola); //Atualiza a sacola
+*/
+        //Utilizando Stream API
 
-        return itemRepository.save(itemParaSerInserido); //O item inserido
+        List<Double> valorDosItens = new ArrayList<>();
+        for (Item itemDaSacola : itensDaSacola) {
+            double valorTotalItem =
+                    itemDaSacola.getProduto().getValorUnitario() * itemDaSacola.getQuantidade();
+            valorDosItens.add(valorTotalItem);
+        }
+
+        double valorTotalSacola = valorDosItens.stream()
+                .mapToDouble(valorTotalDeCadaItem -> valorTotalDeCadaItem)
+                .sum();
+
+        sacola.setValorTotal(valorTotalSacola);
+        sacolaRepository.save(sacola);
+
+        return itemParaSerInserido; //O item inserido
     }
 
     @Override
