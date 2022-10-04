@@ -4,10 +4,12 @@ import com.teste.sacola.model.Item;
 import com.teste.sacola.model.Sacola;
 import com.teste.sacola.resource.dto.ItemDto;
 import com.teste.sacola.service.SacolaService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 //Pode também ser chamada de controller
+@Api(value = "/sacolas")
 @RestController
 @RequestMapping("/sacolas")
 @RequiredArgsConstructor
